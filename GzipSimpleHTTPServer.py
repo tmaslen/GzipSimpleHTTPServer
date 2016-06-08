@@ -95,7 +95,10 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             return None
         self.send_response(200)
         self.send_header("Content-type", ctype)
-        self.send_header("Content-Encoding", "gzip")
+        first_byte = f.read(1)
+        f.seek(0)
+        if (ord(first_byte) == 31):
+            self.send_header("Content-Encoding", "gzip")
         fs = os.fstat(f.fileno())
         raw_content_length = fs[6]
         content = f.read();
