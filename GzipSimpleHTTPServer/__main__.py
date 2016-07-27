@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """Simple HTTP Server.
 
 This module builds on BaseHTTPServer by implementing the standard GET
@@ -8,7 +9,7 @@ and HEAD requests in a fairly straightforward manner.
 
 __version__ = "0.6"
 
-__all__ = ["SimpleHTTPRequestHandler"]
+__all__ = ["GzipSimpleHTTPRequestHandler"]
 
 import os
 import posixpath
@@ -18,6 +19,7 @@ import cgi
 import sys
 import shutil
 import mimetypes
+
 try:
     from cStringIO import StringIO
 except ImportError:
@@ -31,7 +33,7 @@ def gzipencode(content):
     f.close()
     return out.getvalue()
 
-class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class GzipSimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     """Simple HTTP request handler with GET and HEAD commands.
 
@@ -209,7 +211,7 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         })
 
 
-def test(HandlerClass = SimpleHTTPRequestHandler,
+def test(HandlerClass = GzipSimpleHTTPRequestHandler,
          ServerClass = BaseHTTPServer.HTTPServer):
     BaseHTTPServer.test(HandlerClass, ServerClass)
 
