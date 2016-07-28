@@ -2,5 +2,5 @@
 README.txt
 setup.cfg
 setup.py
-GzipSimpleHTTPServer/GzipSimpleHTTPServer.py
 GzipSimpleHTTPServer/__init__.py
+GzipSimpleHTTPServer/__main__.py

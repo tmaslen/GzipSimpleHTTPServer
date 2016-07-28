@@ -19,7 +19,7 @@ import cgi
 import sys
 import shutil
 import mimetypes
-
+import struct
 try:
     from cStringIO import StringIO
 except ImportError:
@@ -35,7 +35,7 @@ def gzipencode(content):
 
 class GzipSimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
-    """Simple HTTP request handler with GET and HEAD commands.
+    """Simple HTT request handler with GET and HEAD commands.
 
     This serves files from the current directory and any of its
     subdirectories.  The MIME type for files is determined by
@@ -104,7 +104,7 @@ class GzipSimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         fs = os.fstat(f.fileno())
         raw_content_length = fs[6]
         content = f.read();
-        content = gzipencode(content)
+        # content = gzipencode(content)
         compressed_content_length = len(content)
         f.close()
         self.send_header("Content-Length", max(raw_content_length, compressed_content_length))
