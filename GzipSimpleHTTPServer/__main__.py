@@ -7,7 +7,7 @@ and HEAD requests in a fairly straightforward manner.
 """
 
 
-__version__ = "0.6"
+__version__ = "0.3"
 
 __all__ = ["GzipSimpleHTTPRequestHandler"]
 
