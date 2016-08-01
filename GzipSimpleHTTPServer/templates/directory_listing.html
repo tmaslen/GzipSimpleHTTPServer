@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+	<title>Directory listing for {{ displayPath }}</title>
+	<body>
+		<h2>Directory listing for {{ displayPath }}</h2>
+		<hr>
+		<ul>
+			{% for name in list %}
+				<li><a href="{{ name }}">{{ name }}</a></li>
+			{% endfor %}
+		</ul>
+	</body>
+</html>

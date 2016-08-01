@@ -4,6 +4,14 @@
 This module builds on BaseHTTPServer by implementing the standard GET
 and HEAD requests in a fairly straightforward manner.
 
+Maslen's improvements
+
+ * Use better status codes
+ * Unit test:
+   * translate_path
+   * guess_type
+   * list_directory
+
 """
 
 
@@ -25,6 +33,9 @@ try:
 except ImportError:
     from StringIO import StringIO
 import gzip
+from jinja2 import Environment, FileSystemLoader
+
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def gzipencode(content):
     out = StringIO()
@@ -127,24 +138,11 @@ class GzipSimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             return None
         list.sort(key=lambda a: a.lower())
         f = StringIO()
-        displaypath = cgi.escape(urllib.unquote(self.path))
-        f.write('<!DOCTYPE html>')
-        f.write("<html>\n<title>Directory listing for %s</title>\n" % displaypath)
-        f.write("<body>\n<h2>Directory listing for %s</h2>\n" % displaypath)
-        f.write("<hr>\n<ul>\n")
-        for name in list:
-            fullname = os.path.join(path, name)
-            displayname = linkname = name
-            # Append / for directories or @ for symbolic links
-            if os.path.isdir(fullname):
-                displayname = name + "/"
-                linkname = name + "/"
-            if os.path.islink(fullname):
-                displayname = name + "@"
-                # Note: a link to a directory displays with @ and links with /
-            f.write('<li><a href="%s">%s</a>\n'
-                    % (urllib.quote(linkname), cgi.escape(displayname)))
-        f.write("</ul>\n<hr>\n</body>\n</html>\n")
+        j2_env = Environment(loader=FileSystemLoader(THIS_DIR), trim_blocks=True)
+        f.write(j2_env.get_template('templates/directory_listing.html').render(
+            displayPath=cgi.escape(urllib.unquote(self.path)),
+            list=list
+        ))
         length = f.tell()
         f.seek(0)
         self.send_response(200)
@@ -211,8 +209,7 @@ class GzipSimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         })
 
 
-def test(HandlerClass = GzipSimpleHTTPRequestHandler,
-         ServerClass = BaseHTTPServer.HTTPServer):
+def test(HandlerClass = GzipSimpleHTTPRequestHandler, ServerClass = BaseHTTPServer.HTTPServer):
     BaseHTTPServer.test(HandlerClass, ServerClass)
 
 
