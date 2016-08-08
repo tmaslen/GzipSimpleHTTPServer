@@ -35,12 +35,12 @@ class GzipSimpleHTTPRequestHandlerTestCase(unittest.TestCase):
 	def test_list_directory(self):
 		fixture = getFixtureMinimized(THIS_DIR+"tests/fixtures/test_list_directory.html")
 
-		p = PropertyMock(return_value="/test-files/")
+		p = PropertyMock(return_value="/tests/manual-test")
 		Mixin.path = p
 		Mixin.send_response = MagicMock()
 		Mixin.send_header = MagicMock()
 		Mixin.end_headers = MagicMock()
 		m = Mixin()
-		f = m.list_directory(THIS_DIR+"test-files")
+		f = m.list_directory(THIS_DIR+"tests/manual-test")
 
 		self.assertEqual(''.join(f.getvalue().split()), fixture)

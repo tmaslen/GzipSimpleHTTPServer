@@ -5,12 +5,12 @@ A very simple modification of the very useful SimpleHTTPServer python script to 
 Since this is a very simple modification made initially for personal usage. It does not check if gzip is acceptable and just assumes it is. It only sets the minimum number of headers required for it to work(Technically it does not set headers properly
 for transferring files). It was tested primarily with chrome.
 
-## Usage
+## Install
 
 Just download the python script and run it from your terminal:
 
 ```
-pip install GzipSimpleHTTPServer
+pip install git+ssh://git@github.com/tmaslen/GzipSimpleHTTPServer.py
 python -m GzipSimpleHTTPServer
 ````
 
@@ -35,6 +35,18 @@ $ kill -9 21500
 git clone git@github.com:tmaslen/GzipSimpleHTTPServer.git
 cd GzipSimpleHTTPServer
 python GzipSimpleHTTPServer
+```
+
+Then view this page in a browser:
+
+```
+http://0.0.0.0:8000/tests/manual-test
+```
+
+Run the tests...
+
+```
+python -m unittest tests.test_Mixin
 ```
 
 ## Deploying new versions
