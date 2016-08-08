@@ -48,19 +48,3 @@ Run the tests...
 ```
 python -m unittest tests.test_Mixin
 ```
-
-## Deploying new versions
-
-Pete Down's [How to submit a package to PyPI](http://peterdowns.com/posts/first-time-with-pypi.html) is a great resource to understand what is going on here.
-
-Register your package:
-
-```
-python setup.py register -r pypi
-```
-
-Then deploy it:
-
-```
-python setup.py sdist upload -r pypi
-```
