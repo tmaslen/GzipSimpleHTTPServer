@@ -10,5 +10,5 @@ setup(
   download_url = 'https://github.com/tmaslen/GzipSimpleHTTPServer/tarball/0.3',
   keywords = ['web server', 'gzip'],
   classifiers = [],
-  install_requires = ["Jinja2"]
+  install_requires = ["Jinja2", "mock"]
 )
