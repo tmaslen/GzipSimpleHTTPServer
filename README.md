@@ -1,7 +1,7 @@
 MaslenDevServer
 ===============
 
-A modification of the very useful SimpleHTTPServer python script (originally forked from [ksmith97](https://github.com/ksmith97)/[GzipSimpleHTTPServer](https://github.com/ksmith97/GzipSimpleHTTPServer) that adds the ability to serve compressed files.
+A modification of the very useful SimpleHTTPServer python script (originally forked from [ksmith97](https://github.com/ksmith97)/[GzipSimpleHTTPServer](https://github.com/ksmith97/GzipSimpleHTTPServer)) that adds the ability to serve compressed files.
 
 ```
 python -m MaslenDevServer
