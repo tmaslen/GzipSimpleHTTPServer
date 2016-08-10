@@ -18,8 +18,6 @@ gzipContentSetting = 'default'
 for arg in sys.argv:
     if arg == '--gzipeverything':
         gzipContentSetting = 'gzip'
-    if arg == '--gunzipeverything':
-        gzipContentSetting = 'gunzip'
 
 def gzipFile(content):
     out = StringIO()
