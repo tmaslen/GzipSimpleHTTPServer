@@ -11,7 +11,7 @@ from Mixin import Mixin
 import sys
 import gzip
 
-__all__ = ["GzipSimpleHTTPRequestHandler"]
+__all__ = ["MaslenRequestHandler"]
 
 gzipContentSetting = 'default'
 
@@ -54,7 +54,7 @@ def processContent(gzipContentSetting, content, ref, isFileGzippedResult):
     return processUsing[gzipContentSetting](isFileGzippedResult, content, ref)
 
 
-class GzipSimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler, Mixin):
+class MaslenRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler, Mixin):
 
     """Simple HTT request handler with GET and HEAD commands.
 

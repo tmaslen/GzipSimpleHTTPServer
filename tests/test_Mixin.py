@@ -1,6 +1,6 @@
 import unittest
 import os
-from GzipSimpleHTTPServer.Mixin import Mixin
+from MaslenDevServer.Mixin import Mixin
 # from unittest.mock import Mock
 from mock import MagicMock, PropertyMock
 

@@ -11,9 +11,9 @@ PORT = 9999
 __version__ = "0.3"
 
 import BaseHTTPServer
-from GzipSimpleHTTPRequestHandler import GzipSimpleHTTPRequestHandler
+from MaslenRequestHandler import MaslenRequestHandler
 
-def test(HandlerClass = GzipSimpleHTTPRequestHandler, ServerClass = BaseHTTPServer.HTTPServer):
+def test(HandlerClass = MaslenRequestHandler, ServerClass = BaseHTTPServer.HTTPServer):
     BaseHTTPServer.test(HandlerClass, ServerClass)
 
 if __name__ == '__main__':
