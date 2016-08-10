@@ -42,8 +42,6 @@ class Mixin:
         interface the same as for send_head().
 
         """
-        print(path)
-        print(self.path)
         try:
             list = os.listdir(path)
         except os.error:

@@ -6,6 +6,7 @@ and HEAD requests in a fairly straightforward manner.
 
 """
 
+PORT = 9999
 
 __version__ = "0.3"
 
@@ -14,7 +15,6 @@ from GzipSimpleHTTPRequestHandler import GzipSimpleHTTPRequestHandler
 
 def test(HandlerClass = GzipSimpleHTTPRequestHandler, ServerClass = BaseHTTPServer.HTTPServer):
     BaseHTTPServer.test(HandlerClass, ServerClass)
-
 
 if __name__ == '__main__':
     test()

@@ -7,17 +7,54 @@ try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
-import gzip
 from Mixin import Mixin
+import sys
+import gzip
 
 __all__ = ["GzipSimpleHTTPRequestHandler"]
 
-def gzipencode(content):
+gzipContentSetting = 'default'
+
+for arg in sys.argv:
+    if arg == '--gzipeverything':
+        gzipContentSetting = 'gzip'
+    if arg == '--gunzipeverything':
+        gzipContentSetting = 'gunzip'
+
+def gzipFile(content):
     out = StringIO()
     f = gzip.GzipFile(fileobj=out, mode='w', compresslevel=5)
     f.write(content)
     f.close()
     return out.getvalue()
+
+def isFileGzipped(f):
+    first_byte = f.read(1)
+    f.seek(0)
+    return ord(first_byte) == 31
+
+def processContentDefault(isFileGzippedResult, content, ref):
+    if (isFileGzippedResult):
+        ref.send_header("Content-Encoding", "gzip")
+    return content
+
+def gzipAllContent(isFileGzippedResult, content, ref):
+    ref.send_header("Content-Encoding", "gzip")
+    if (isFileGzippedResult):
+        return content
+    else:
+        return gzipFile(content)
+
+
+def processContent(gzipContentSetting, content, ref, isFileGzippedResult):
+    
+    processUsing = {
+        'default': processContentDefault,
+        'gzip': gzipAllContent
+    }
+
+    return processUsing[gzipContentSetting](isFileGzippedResult, content, ref)
+
 
 class GzipSimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler, Mixin):
 
@@ -93,12 +130,10 @@ class GzipSimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler, Mixin)
         self.send_header("Content-type", ctype)
         first_byte = f.read(1)
         f.seek(0)
-        if (ord(first_byte) == 31):
-            self.send_header("Content-Encoding", "gzip")
+        isFileGzippedResult = isFileGzipped(f)
         fs = os.fstat(f.fileno())
         raw_content_length = fs[6]
-        content = f.read();
-        # content = gzipencode(content)
+        content = processContent(gzipContentSetting, f.read(), self, isFileGzippedResult)
         compressed_content_length = len(content)
         f.close()
         self.send_header("Content-Length", max(raw_content_length, compressed_content_length))
